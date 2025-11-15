@@ -9,7 +9,7 @@ npm run dev
 ---
 
 ## 📚 Sumário
-- [Descrição](#descrição)
+- [Descrição](#Descrição)
 - [Tecnologias](#tecnologias)
 - [Estrutura](#estrutura)
 - [Instalação e execução dev](#instalação-e-execução-dev)
