@@ -1,0 +1,145 @@
+.cardapio-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1500px;
+    margin: 90px auto 20px;
+    width: 70%;
+}
+
+.refeicao {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.voltar-btn {
+    text-decoration: underline;
+    font-weight: 700;
+    color: #961e1e;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.voltar-btn:hover {
+    cursor: pointer;
+}
+
+.refeicao h3 {
+    color: #961e1e;
+}
+
+.dia {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #961e1e;
+    border-radius: 10px;
+
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    scroll-margin-top: 180px
+}
+
+.dia h2 {
+    color: white;
+}
+
+.scroll-top-button {
+    display: flex;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.5rem;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: #f9f9f9;
+    background-color: #961e1e;
+    border: none;
+    border-radius: 10px;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.scroll-top-button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+@media (min-width: 900px) {
+    .dia-div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .refeicao {
+        flex: 1 1 45%;
+        margin: 0.5rem;
+    }
+}
+
+
+@media (min-width: 768px) {
+  .scroll-top-button {
+    right: 6vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .scroll-top-button {
+    right: 8vw;
+  }
+}
+
+.dias-container {
+  margin-bottom: 1rem;
+}
+
+.dias-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.dia-btn {
+    height: 2.4rem;
+    width: 2.4rem;
+    background-color: #fff;
+    color: #961e1e;
+    border: 2px solid #961e1e;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.dia-btn:hover {
+    background-color: #961e1e;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .dia-btn {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    min-width: 36px;
+  }
+}
