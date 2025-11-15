@@ -47,7 +47,7 @@ npm install
 
 
 ### **2. Rodar o projeto**
-Frontend:
+No frontend **e** no backend:
 
 npm run dev
 
