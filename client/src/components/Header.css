@@ -7,7 +7,6 @@
 .header {
   background-color: #961e1e;
   color: #fff;
-  position: fixed;
   z-index: 1000;
   top: 0;
   width: 100%;
@@ -21,12 +20,17 @@
 .header-content {
   display: flex;
   justify-content: space-between;
-  gap: 3rem;
+  gap: 1rem;
   align-items: center;
 
   width: 100%;
   max-width: 1036px;
   padding: 1rem 2rem;
+}
+
+.header-cap {
+  font-size: 1.5rem;
+  font-weight: 400;
 }
 
 .logo {
@@ -74,6 +78,5 @@
 }
 
 body {
-  padding-top: 90px;
   background-color: #f9f9f9;
 }

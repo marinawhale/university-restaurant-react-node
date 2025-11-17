@@ -5,6 +5,7 @@
     max-width: 1200px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     overflow: hidden;
+    border-radius: 8px;
 }
 
 .menu-header {
@@ -55,17 +56,12 @@
 
 .items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 2rem;
     padding: 2rem 2rem;
     justify-items: center;
     background: #f9f9f9;
     text-align: center;
-}
-
-.items img {
-    width: 100%;
-    border-radius: 6px;
 }
 
 .items p {
@@ -74,9 +70,25 @@
 }
 
 .items-div {
+    padding-top: 0.7rem;
     transition: transform 0.2s ease;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    text-transform: uppercase;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 150px;
+}
+
+.items p {
+    margin: 0.5rem;
+    font-weight: 500;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.items-div img {
+  aspect-ratio: 1 / 1;
+  height: 8rem;
+  border-radius: 8px;
 }
 
 .items-div:hover {

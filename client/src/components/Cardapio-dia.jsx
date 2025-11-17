@@ -1,10 +1,10 @@
 import './Cardapio-dia.css'
 import { useNavigate } from 'react-router-dom';
 
-import restaurante from '../assets/restaurante4.jpg'
+import restaurante from '../assets/faixada-ufsj.jpg'
 
 const Cardapio = () => {
-
+    
     const navigate = useNavigate();
 
     const irParaCardapio = () => {
@@ -12,14 +12,9 @@ const Cardapio = () => {
     }
 
     return (
-        <div className="cardapio-div">
-            <div className='imagem'>
-                <p><img src={restaurante} alt="restaurante" /></p>
-            </div>
-            <div className='cardapio'>
-                <h2 onClick={irParaCardapio}>CARDÁPIO DO DIA</h2>
-                <h3>Refeições saudáveis e equilibradas!</h3>
-            </div>
+        <div className="cardapio-dia">
+            <img src={restaurante} alt="restaurante" />
+            <h2 onClick={irParaCardapio}>VER CARDAPIO COMPLETO</h2>
         </div>
     )
 }

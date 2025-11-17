@@ -1,30 +1,30 @@
 import './Menu.css'
 import { Hamburger, Candy, CupSoda } from 'lucide-react'
-import Lanches from './opcoes-cardapio/Lanches'
+import Salgados from './opcoes-cardapio/Salgados'
 import Bebidas from './opcoes-cardapio/Bebidas'
 import Doces from './opcoes-cardapio/Bomboniere'
 
 import { useState } from 'react'
 
 const Menu = () => {
-    const [categoria, setCategoria] = useState('lanches')
+    const [categoria, setCategoria] = useState('Salgados')
 
     const botoes = [
-        { nome: "lanches", icone: <Hamburger />},
-        { nome: "bebidas", icone: <CupSoda />},
-        { nome: "doces", icone: <Candy />}
+        { nome: "Salgados", icone: <Hamburger />},
+        { nome: "Bebidas", icone: <CupSoda />},
+        { nome: "Doces", icone: <Candy />}
     ]
 
     const renderConteudo = () => {
         switch (categoria) {
-            case "lanches":
-                return <Lanches />
-            case "bebidas":
+            case "Salgados":
+                return <Salgados />
+            case "Bebidas":
                 return <Bebidas />
-            case "doces":
+            case "Doces":
                 return <Doces />
             default:
-                return <Lanches />
+                return <Salgados />
         }
     }
 

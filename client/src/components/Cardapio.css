@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     max-width: 1500px;
-    margin: 90px auto 20px;
+    margin: 30px auto 20px;
     width: 70%;
 }
 
@@ -19,16 +19,36 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
+.cardapio-botoes {
+  display: flex;
+  gap: 2rem;
+}
+
 .voltar-btn {
-    text-decoration: underline;
-    font-weight: 700;
-    color: #961e1e;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #961e1e;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: solid #961e1e 2px;
+    width: 30%;
+    margin-bottom: 1rem;
 }
 
 .voltar-btn:hover {
+    color: #961e1e;
+    background-color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .refeicao h3 {
@@ -44,7 +64,7 @@
     background-color: #961e1e;
     border-radius: 10px;
 
-    margin: 20px 0;
+    margin: 10px 0;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     scroll-margin-top: 180px
 }
@@ -61,7 +81,7 @@
     padding: 0.5rem;
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    right: 30px;
     color: #f9f9f9;
     background-color: #961e1e;
     border: none;
@@ -187,6 +207,52 @@
 
 .dias-botoes {
     margin-top: 0;
+}
+
+.calendario-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    cursor: pointer;
+    transition: backdrop-filter 0.3s ease; background-color: 0.3s ease;
+}
+
+.calendario-flutuante {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 490px;
+    width: 90%;
+}
+
+.fechar-calendario-btn {
+    text-align: end;
+    text-decoration: underline;
+    font-weight: 700;
+    color: #961e1e;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.fechar-calendario-btn:hover {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.calendario-flutuante {
+    position: fixed;
 }
 
 @media (max-width: 600px) {

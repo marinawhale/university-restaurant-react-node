@@ -1,57 +1,65 @@
-.cardapio-div {
-    display: flex;
-    margin: 60px auto 20px;
-    width: 70%;
+.cardapio-dia {
+    margin: 30px auto 20px;
     max-width: 1500px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    flex-direction: row;
+    border-radius: 8px;
+    width: 70%;
+    display: block;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
 }
 
-.cardapio {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2.5rem 3rem;
-    background: #fff;
-    color: #222;
-    align-items: center;
+.cardapio-dia h2 {
     text-align: center;
-}
-
-.cardapio h2 {
-    text-decoration: underline;
-    font-weight: 700;
-    color: #961e1e;
-    margin-bottom: 0.5rem;
-}
-
-.cardapio h2:hover {
-    cursor: pointer;
-}
-
-.imagem {
-    flex: 1;
+    background-color: #961e1e;
+    color: #fff;
+    padding: 1rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: solid #961e1e 2px;
+    position: absolute;
+    top: 35%;
+    right: 2rem;
+    z-index: 10;
+    width: 40%;
+    height: 25%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ececec;
 }
 
-.imagem img {
+.cardapio-dia h2:hover {
+    color: #961e1e;
+    background-color: white;
+    border: solid #961e1e 2px;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); 
+}
+
+.cardapio-dia img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
 }
 
 @media (max-width: 900px) {
-    .cardapio-div {
-        flex-direction: column;
+    .cardapio-dia h2 {
+        font-size: 0.9rem;
+        width: 30%;
+        height: 40%;
     }
-    
-    .cardapio {
-        padding: 1.5rem; 
+}
+
+@media (max-width: 750px) {
+    .cardapio-dia h2 {
+        font-size: 0.7rem;
     }
 }
