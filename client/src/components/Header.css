@@ -24,7 +24,6 @@
   align-items: center;
 
   width: 100%;
-  max-width: 1036px;
   padding: 1rem 2rem;
 }
 
@@ -53,6 +52,14 @@
   text-transform: uppercase;
 }
 
+.logo-texto-completo {
+  display: inline;
+}
+
+.logo-sigla {
+    display: none;
+}
+
 .logo img {
   padding-right: 20px;
   height: 6rem;
@@ -79,4 +86,50 @@
 
 body {
   background-color: #f9f9f9;
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 6rem;
+  }
+
+  .logo {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.2rem;
+  }
+  
+  .header-content {
+      justify-content: center;
+      padding-top: 1.5rem;
+  }
+
+  .logo img {
+      height: 3rem;
+      padding-right: 0;
+  }
+
+  .logo p {
+      max-width: none;
+  }
+
+  .logo-texto-completo {
+      display: none;
+  }
+
+  .logo-sigla {
+      display: inline-block;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 5px;
+  }
+
+  .header-cap {
+      display: none;
+  }
+  
+  .header-options {
+      display: none;
+  }
 }

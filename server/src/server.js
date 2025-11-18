@@ -7,7 +7,7 @@ const app = express()
 const PORT = process.env.PORT || 3000;
 
 const allowedOrigins = [
-    'https://restaurante-cap-frontend.onrender.com/cardapio',
+    'https://restaurante-cap-frontend.onrender.com',
     'http://localhost:5173'
 ]
 

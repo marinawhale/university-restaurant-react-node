@@ -14,7 +14,10 @@ const Header = () => {
       <div className="header-content">
         <div className="logo" onClick={irParaUFSJ}>
           <img src={logo} alt="Logo UFSJ" />
-          <p>UNIVERSIDADE FEDERAL DE SÃO JOÃO DEL-REI</p>
+          <p>
+            <span className="logo-texto-completo">UNIVERSIDADE FEDERAL DE SÃO JOÃO DEL-REI</span>
+            <span className="logo-sigla">UFSJ</span>
+          </p>
         </div>
         <div className='header-cap'>
           <p><b>CAP</b> - Campus Alto Paraopeba</p>
