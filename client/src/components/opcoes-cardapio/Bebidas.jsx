@@ -1,3 +1,5 @@
+import React from 'react'
+
 import AguaMineral from '../../assets/bebidas/agua-mineral.jpg'
 import AguaSaborizada from '../../assets/bebidas/agua-saborizada.jpg'
 import AguaComGas from '../../assets/bebidas/agua-com-gas.jpg'

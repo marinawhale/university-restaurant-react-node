@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Bolo from '../../assets/doces/bolo.jpg'
 import Batom from '../../assets/doces/batom.jpg'
 import BisXtra from '../../assets/doces/bis-xtra.jpg'
