@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server/server.js",
-    "build": "cd client && vite build",
+    "build": "echo 'Frontend build será feito em outro serviço'",
     "postinstall": "",
     "dev:server": "node --watch server/server.js",
     "dev:client": "vite", 
