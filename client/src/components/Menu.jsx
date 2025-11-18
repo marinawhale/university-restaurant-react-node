@@ -1,6 +1,6 @@
 import './Menu.css'
 import React from 'react'
-import { Hamburger, Candy, CupSoda } from 'lucide-react'
+import { Burger, Candy, CupSoda } from 'lucide-react'
 import Salgados from './opcoes-cardapio/Salgados'
 import Bebidas from './opcoes-cardapio/Bebidas'
 import Doces from './opcoes-cardapio/Bomboniere'
@@ -11,7 +11,7 @@ const Menu = () => {
     const [categoria, setCategoria] = useState('Salgados')
 
     const botoes = [
-        { nome: "Salgados", icone: <Hamburger />},
+        { nome: "Salgados", icone: <Burger />},
         { nome: "Bebidas", icone: <CupSoda />},
         { nome: "Doces", icone: <Candy />}
     ]
