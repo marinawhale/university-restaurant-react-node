@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/server.js", 
 
-    "build": "vite build client",
+    "build": "vite build",
     "postinstall": "",
     
     "dev:server": "node --watch server/server.js",
