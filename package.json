@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node server/server.js",
-    "build": "vite build client",
-    "postinstall": "npm run build",
+    "build": "cd client && vite build",
+    "postinstall": "",
     "dev:server": "node --watch server/server.js",
     "dev:client": "vite", 
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"" 
