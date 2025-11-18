@@ -262,3 +262,80 @@
     min-width: 36px;
   }
 }
+
+@media (max-width: 480px) {
+    .cardapio-container {
+        width: 95%;
+        margin: 15px auto 10px;
+    }
+
+    .cardapio-botoes {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .voltar-btn {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .refeicao, .dia {
+        padding: 0.8rem;
+        margin: 10px 0;
+    }
+
+    .refeicao h3 {
+        font-size: 1.1rem;
+    }
+
+    .dia-label {
+        font-size: 0.75em;
+    }
+
+    .calendario-flutuante {
+        width: 95%;
+        max-width: 320px;
+        padding: 15px;
+    }
+
+    .dias-da-semana {
+        gap: 5px; 
+        grid-template-columns: repeat(7, minmax(30px, 1fr));
+        padding: 0 5px;
+    }
+
+    .dia-label {
+        font-size: 0.7em;
+    }
+
+    .dias-botoes {
+        gap: 5px;
+        grid-template-columns: repeat(7, minmax(30px, 1fr));
+        padding: 5px;
+    }
+
+    .dia-btn {
+        min-width: 30px;
+        height: 30px;
+        font-size: 0.8em;
+        padding: 0;
+    }
+
+    .fechar-calendario-btn {
+        font-size: 0.9rem;
+        margin-bottom: 0.2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .dia-btn {
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+    .dias-da-semana,
+    .dias-botoes {
+        gap: 6px;
+        grid-template-columns: repeat(7, minmax(32px, 1fr));
+    }
+}

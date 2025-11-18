@@ -112,3 +112,53 @@
         font-size: 0.9rem;
     }
 }
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 5px 0;
+    }
+
+    .footer-container {
+        width: 95%;
+        margin: 10px auto 5px;
+    }
+
+    .footer-logo {
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .footer-logo img {
+        height: 2rem;
+        margin-right: 0.5rem;
+    }
+
+    .footer-logo p {
+        font-size: 0.8rem;
+        line-height: 1.2;
+    }
+
+    .footer-icons {
+        margin-top: 0.5rem;
+        gap: 1.5rem;
+    }
+
+    .footer-txt {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-contato {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center; 
+    }
+    
+    .footer-personals {
+        text-align: center;
+    }
+    
+    .footer-name p {
+        text-align: center;
+    }
+}

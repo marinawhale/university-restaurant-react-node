@@ -63,3 +63,27 @@
         font-size: 0.7rem;
     }
 }
+
+@media (max-width: 768px) {
+    .cardapio-dia {
+        width: 90%;
+        margin: 20px auto 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .cardapio-dia h2 {
+        bottom: 1rem;
+        right: 1rem;
+        width: 45%;
+        max-width: 50%;
+        height: auto;
+        padding: 1.4rem;
+        font-size: 0.8rem;
+        transition: none; 
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .cardapio-dia h2:hover {
+        transform: none;
+        cursor: default;
+    }
+}
