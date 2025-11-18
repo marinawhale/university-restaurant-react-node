@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Full-stack application for the university restaurant menu.",
   "main": "server/server.js",
-  "type": "module",
   "scripts": {
     "start": "node server/server.js", 
 
