@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Cardapio.css';
+
+const API_BASE = import.meta.env.VITE_API_URL;
 
 const MES_BASE = 10;
 const ANO_BASE = 2025;
@@ -104,7 +107,7 @@ const Cardapio = () => {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/cardapio')
+        fetch(`${API_BASE}/api/cardapio`)
             .then((res) => res.json())
             .then((data) => {
                 const diasAgrupados = agruparPorDia(data);

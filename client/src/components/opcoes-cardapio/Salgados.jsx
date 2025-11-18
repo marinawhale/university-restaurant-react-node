@@ -1,3 +1,5 @@
+import React from 'react'
+
 import SalgadoAssado from '../../assets/salgados/salgado-assado.jpg'
 import SalgadoFrito from '../../assets/salgados/salgado-frito.png'
 import MiniPizza from '../../assets/salgados/mini-pizza.jpg'

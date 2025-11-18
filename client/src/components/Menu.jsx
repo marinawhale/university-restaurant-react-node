@@ -1,4 +1,5 @@
 import './Menu.css'
+import React from 'react'
 import { Hamburger, Candy, CupSoda } from 'lucide-react'
 import Salgados from './opcoes-cardapio/Salgados'
 import Bebidas from './opcoes-cardapio/Bebidas'
