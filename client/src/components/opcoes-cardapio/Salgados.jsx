@@ -2,7 +2,6 @@ import React from 'react'
 
 import SalgadoAssado from '../../assets/salgados/salgado-assado.jpg'
 import SalgadoFrito from '../../assets/salgados/salgado-frito.png'
-import MiniPizza from '../../assets/salgados/mini-pizza.jpg'
 import HamburgerAssado from '../../assets/salgados/hamburger-assado.jpg'
 import Tortinha from '../../assets/salgados/tortinha.jpg'
 import PaoComManteiga from '../../assets/salgados/pao-com-manteiga.png'
@@ -35,18 +34,13 @@ const Salgados = () => {
             "img": SalgadoFrito
         },
         {
-            "nome": "Mini Pizza",
-            "preco": 8.00,
-            "img": MiniPizza
-        },
-        {
             "nome": "Hambúrger Assado",
             "preco": 9.00,
             "img": HamburgerAssado
         },
         {
             "nome": "Tortinha",
-            "preco": 3.00,
+            "preco": 8.00,
             "img": Tortinha
         },
         {

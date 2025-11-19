@@ -37,17 +37,17 @@ const Bebidas = () => {
     },
     {
         "nome": "Água Saborizada",
-        "preco": 4.00,
+        "preco": 8.00,
         "img": AguaSaborizada
     },
     {
         "nome": "Água com Gás",
-        "preco": 3.00,
+        "preco": 4.00,
         "img": AguaComGas
     },
     {
         "nome": "Café",
-        "preco": 3.00,
+        "preco": 3.50,
         "img": Cafe
     },
     {
@@ -82,43 +82,33 @@ const Bebidas = () => {
     },
     {
         "nome": "Suco Lata",
-        "preco": 5.00,
+        "preco": 8.00,
         "img": SucoLata
     },
     {
         "nome": "Refrigerante 200ml",
-        "preco": 8.00,
+        "preco": 3.50,
         "img": Refrigerante200
     },
     {
-        "nome": "Refrigerante 220ml",
-        "preco": 4.00,
-        "img": Refrigerante220
-    },
-    {
         "nome": "Refrigerante 350ml",
-        "preco": 5.00,
+        "preco": 6.50,
         "img": Refrigerante350
     },
     {
         "nome": "Refrigerante 600ml",
-        "preco": 7.00,
+        "preco": 8.50,
         "img": Refrigerante600
     },
     {
         "nome": "Refrigerante 2L",
-        "preco": 9.00,
+        "preco": 16.00,
         "img": Refrigerante2
     },
     {
         "nome": "Suco Caixa",
         "preco": 4.00,
         "img": SucoCaixa
-    },
-    {
-        "nome": "Suco Natural",
-        "preco": 5.00,
-        "img": SucoNatural
     },
     {
         "nome": "Energético",
