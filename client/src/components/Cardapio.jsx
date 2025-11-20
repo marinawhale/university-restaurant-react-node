@@ -7,7 +7,6 @@ const API_BASE = import.meta.env.VITE_API_URL;
 
 const MES_BASE = 10;
 const ANO_BASE = 2025;
-const TEMPO_PAUSA = 10000;
 
 const diasDaSemana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
@@ -120,18 +119,9 @@ const Cardapio = () => {
                     setSelectedDay(diasOrdenados[0]); 
                 }
                 
-                // Atraso de 3 segundos
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, TEMPO_PAUSA);
             })
             .catch((err) => {
                 console.error('Erro ao carregar cardápio:', err);
-                
-                // Atraso de 3 segundos
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, TEMPO_PAUSA);
             });
     }, []);
 
