@@ -7,6 +7,7 @@ const API_BASE = import.meta.env.VITE_API_URL;
 
 const MES_BASE = 10;
 const ANO_BASE = 2025;
+const TEMPO_PAUSA = 10000;
 
 const diasDaSemana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
@@ -61,6 +62,7 @@ const Cardapio = () => {
     const [showButton, setShowButton] = useState(false);
     const [selectedDay, setSelectedDay] = useState(null);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [isLoading, setIsLoading] = useState(true); 
     const diasBotoesRef = useRef(null);
 
     const agruparPorDia = (data) => {
@@ -117,8 +119,20 @@ const Cardapio = () => {
                     const diasOrdenados = Object.keys(diasAgrupados).sort((a, b) => parseInt(a) - parseInt(b));
                     setSelectedDay(diasOrdenados[0]); 
                 }
+                
+                // Atraso de 3 segundos
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, TEMPO_PAUSA);
             })
-            .catch((err) => console.error('Erro ao carregar cardápio:', err));
+            .catch((err) => {
+                console.error('Erro ao carregar cardápio:', err);
+                
+                // Atraso de 3 segundos
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, TEMPO_PAUSA);
+            });
     }, []);
 
     const navigate = useNavigate();
@@ -149,123 +163,133 @@ const Cardapio = () => {
 
     return (
         <div className="cardapio-container">
-            <div className='cardapio-botoes'>
-              <div className='voltar-btn' onClick={paginaInicial}>
-                <p >VOLTAR</p>
-            </div>
-            
-            <div className='voltar-btn' onClick={toggleCalendar}>
-                    {showCalendar ? 'FECHAR CALENDÁRIO' : 'ABRIR CALENDÁRIO'}
-            </div>
-            </div>
-
-            {showCalendar && (
-              <div>
-                <div className="calendario-overlay" onClick={toggleCalendar}></div>
-                <div className='calendario-flutuante'>
-                    <div className="dias-da-semana">
-                        {diasDaSemana.map((label, index) => (
-                            <div key={index} className="dia-label">
-                                {label}
-                            </div>
-                        ))}
+            {isLoading ? (
+                <div className="loading-message-container">
+                    <h1>Carregando Cardápio...</h1>
+                    <div className="loading-spinner"></div>
+                    <p>O backend usa um servidor grátis, então pode demorar um pouquinho!</p> 
+                </div>
+            ) : (
+                <>
+                    <div className='cardapio-botoes'>
+                        <div className='voltar-btn' onClick={paginaInicial}>
+                            <p >VOLTAR</p>
+                        </div>
+                        
+                        <div className='voltar-btn' onClick={toggleCalendar}>
+                            {showCalendar ? 'FECHAR CALENDÁRIO' : 'ABRIR CALENDÁRIO'}
+                        </div>
                     </div>
 
-                    <div className="dias-botoes" ref={diasBotoesRef}>
-                        {Array(getPlaceholderCount(ANO_BASE, MES_BASE)).fill(null).map((_, index) => (
-                            <div key={`ph-${index}`} className="dia-placeholder" />
-                        ))}
-                        {gerarTodosOsDiasDoMes().map((dia) => {
-                            const diaData = cardapio[dia];
+                    {showCalendar && (
+                        <div>
+                            <div className="calendario-overlay" onClick={toggleCalendar}></div>
+                            <div className='calendario-flutuante'>
+                                <div className="dias-da-semana">
+                                    {diasDaSemana.map((label, index) => (
+                                        <div key={index} className="dia-label">
+                                            {label}
+                                        </div>
+                                    ))}
+                                </div>
 
-                            const isAlmocoFeriado = diaData?.ALMOCO?.['prato_principal'] === 'FERIADO';
-                            const isJantarFeriado = diaData?.JANTAR?.['prato_principal'] === 'FERIADO';
-                            const isFeriadoProprio = isAlmocoFeriado || isJantarFeriado;
+                                <div className="dias-botoes" ref={diasBotoesRef}>
+                                    {Array(getPlaceholderCount(ANO_BASE, MES_BASE)).fill(null).map((_, index) => (
+                                        <div key={`ph-${index}`} className="dia-placeholder" />
+                                    ))}
+                                    {gerarTodosOsDiasDoMes().map((dia) => {
+                                        const diaData = cardapio[dia];
+
+                                        const isAlmocoFeriado = diaData?.ALMOCO?.['prato_principal'] === 'FERIADO';
+                                        const isJantarFeriado = diaData?.JANTAR?.['prato_principal'] === 'FERIADO';
+                                        const isFeriadoProprio = isAlmocoFeriado || isJantarFeriado;
+                                        
+                                        const isEmenda = isEmendaDeFeriado(dia, cardapio);
+
+                                        const temCardapio = !!diaData
+                                        const isFDS = isFimDeSemana(dia);
+                                        
+                                        const isClicavel = temCardapio && !isFDS && !isFeriadoProprio && !isEmenda;
+
+                                        const classeBotao = `dia-btn ${selectedDay === dia ? 'active' : ''} ${!isClicavel ? 'disabled-btn' : ''}`;
+                                            
+                                        let tooltip = '';
+                                        if (isFeriadoProprio) {
+                                            tooltip = 'FERIADO';
+                                        } else if (isEmenda) {
+                                            tooltip = 'RECESSO ACADÊMICO (Emenda de Feriado)';
+                                        } else if (isFDS) {
+                                            tooltip = 'Fim de Semana';
+                                        }
+
+                                        return (
+                                            <button
+                                                key={dia}
+                                                className={classeBotao}
+                                                onClick={() => {isClicavel && irParaDia(dia); toggleCalendar()}}
+                                                title={tooltip}
+                                                disabled={!isClicavel}
+                                            >
+                                                {dia}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                <div className="fechar-calendario-btn">
+                                    <p onClick={toggleCalendar}>FECHAR</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {Object.entries(cardapio)
+                        .sort(([diaA], [diaB]) => parseInt(diaA) - parseInt(diaB))
+                        .map(([dia, diaData]) => {
                             
+                            const isAlmocoFeriado = diaData?.ALMOCO?.prato_principal === 'FERIADO';
+                            const isJantarFeriado = diaData?.JANTAR?.prato_principal === 'FERIADO';
+                            const isDiaFeriado = isAlmocoFeriado || isJantarFeriado;
+
                             const isEmenda = isEmendaDeFeriado(dia, cardapio);
 
-                            const temCardapio = !!diaData
-                            const isFDS = isFimDeSemana(dia);
-                            
-                            const isClicavel = temCardapio && !isFDS && !isFeriadoProprio && !isEmenda;
-
-                            const classeBotao = `dia-btn ${selectedDay === dia ? 'active' : ''} ${!isClicavel ? 'disabled-btn' : ''}`;
-                                
-                            let tooltip = '';
-                            if (isFeriadoProprio) {
-                                tooltip = 'FERIADO';
-                            } else if (isEmenda) {
-                                tooltip = 'RECESSO ACADÊMICO (Emenda de Feriado)';
-                            } else if (isFDS) {
-                                tooltip = 'Fim de Semana';
+                            if (isDiaFeriado || isEmenda) {
+                                return null
                             }
 
                             return (
-                                <button
+                                <div
                                     key={dia}
-                                    className={classeBotao}
-                                    onClick={() => {isClicavel && irParaDia(dia); toggleCalendar()}}
-                                    title={tooltip}
-                                    disabled={!isClicavel}
+                                    className={`dia ${selectedDay === dia ? 'active' : ''}`}
+                                    ref={(el) => (diaRefs.current[dia] = el)}
                                 >
-                                    {dia}
-                                </button>
+                                    <h2>Dia {dia}</h2>
+                                    <div className='dia-div'>
+                                        {Object.entries(diaData).map(([tipo, item]) => (
+                                            <div key={tipo} className="refeicao">
+                                                <h3>{tipo === 'ALMOCO' ? 'ALMOÇO' : 'JANTAR'}</h3>
+                                                <p><strong>Prato principal:</strong> {item.prato_principal}</p>
+                                                <p><strong>Vegetariano:</strong> {item.vegetariano}</p>
+                                                <p><strong>Guarnição:</strong> {item.guarnicao}</p>
+                                                <p><strong>Arroz:</strong> {item.arroz}</p>
+                                                <p><strong>Feijão:</strong> {item.feijao}</p>
+                                                <p><strong>Salada 1:</strong> {item.salada_1}</p>
+                                                <p><strong>Salada 2:</strong> {item.salada_2}</p>
+                                                <p><strong>Suco:</strong> {item.suco}</p>
+                                                <p><strong>Sobremesa:</strong> {item.sobremesa}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             );
                         })}
-                    </div>
 
-                    <div className="fechar-calendario-btn">
-                  <p onClick={toggleCalendar}>FECHAR</p>
-                </div>
-              </div>
-              </div>
-            )}
-
-            {Object.entries(cardapio)
-                .sort(([diaA], [diaB]) => parseInt(diaA) - parseInt(diaB))
-                .map(([dia, diaData]) => {
-                    
-                    const isAlmocoFeriado = diaData?.ALMOCO?.prato_principal === 'FERIADO';
-                    const isJantarFeriado = diaData?.JANTAR?.prato_principal === 'FERIADO';
-                    const isDiaFeriado = isAlmocoFeriado || isJantarFeriado;
-
-                    const isEmenda = isEmendaDeFeriado(dia, cardapio);
-
-                    if (isDiaFeriado || isEmenda) {
-                        return null
-                    }
-
-                    return (
-                        <div
-                            key={dia}
-                            className={`dia ${selectedDay === dia ? 'active' : ''}`}
-                            ref={(el) => (diaRefs.current[dia] = el)}
-                        >
-                            <h2>Dia {dia}</h2>
-                            <div className='dia-div'>
-                                {Object.entries(diaData).map(([tipo, item]) => (
-                                    <div key={tipo} className="refeicao">
-                                        <h3>{tipo === 'ALMOCO' ? 'ALMOÇO' : 'JANTAR'}</h3>
-                                        <p><strong>Prato principal:</strong> {item.prato_principal}</p>
-                                        <p><strong>Vegetariano:</strong> {item.vegetariano}</p>
-                                        <p><strong>Guarnição:</strong> {item.guarnicao}</p>
-                                        <p><strong>Arroz:</strong> {item.arroz}</p>
-                                        <p><strong>Feijão:</strong> {item.feijao}</p>
-                                        <p><strong>Salada 1:</strong> {item.salada_1}</p>
-                                        <p><strong>Salada 2:</strong> {item.salada_2}</p>
-                                        <p><strong>Suco:</strong> {item.suco}</p>
-                                        <p><strong>Sobremesa:</strong> {item.sobremesa}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    );
-                })}
-
-            {showButton && (
-                <button className="scroll-top-button" onClick={scrollToTop}>
-                    ↑
-                </button>
+                    {showButton && (
+                        <button className="scroll-top-button" onClick={scrollToTop}>
+                            ↑
+                        </button>
+                    )}
+                </>
             )}
         </div>
     );

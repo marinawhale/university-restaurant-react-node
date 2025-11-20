@@ -1,3 +1,7 @@
+* {
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
 .cardapio-container {
     display: flex;
     flex-direction: column;
@@ -20,8 +24,8 @@
 }
 
 .cardapio-botoes {
-  display: flex;
-  gap: 2rem;
+    display: flex;
+    gap: 2rem;
 }
 
 .voltar-btn {
@@ -112,19 +116,19 @@
 
 
 @media (min-width: 768px) {
-  .scroll-top-button {
-    right: 6vw;
-  }
+    .scroll-top-button {
+        right: 6vw;
+    }
 }
 
 @media (min-width: 1200px) {
-  .scroll-top-button {
-    right: 8vw;
-  }
+    .scroll-top-button {
+        right: 8vw;
+    }
 }
 
 .dias-container {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .dias-botoes {
@@ -164,8 +168,8 @@
 }
 
 .feriado-msg {
-  color: white;
-  font-weight: 600;
+    color: white;
+    font-weight: 600;
 }
 
 .dias-botoes .disabled-btn {
@@ -219,7 +223,7 @@
     backdrop-filter: blur(5px);
     z-index: 999;
     cursor: pointer;
-    transition: backdrop-filter 0.3s ease; background-color: 0.3s ease;
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
 }
 
 .calendario-flutuante {
@@ -250,17 +254,96 @@
     cursor: pointer;
     text-decoration: none;
 }
+.loading-message-container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #333;
+    padding: 20px; 
+    text-align: center;
+}
 
-.calendario-flutuante {
-    position: fixed;
+.loading-message-container h1 {
+    color: #961e1e; 
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.loading-message-container p {
+    max-width: 70%;
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
+.loading-spinner {
+    --size: 30px;
+    --first-block-clr: #961e1e;
+    --second-block-clr: #333;
+    width: 60px; 
+    height: 60px;
+    position: relative; 
+}
+
+.loading-spinner::after,
+.loading-spinner::before {
+    box-sizing: border-box;
+    position: absolute;
+    content: "";
+    width: var(--size);
+    height: var(--size);
+    background: var(--first-block-clr);
+}
+
+.loading-spinner::before {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    animation: up 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
+    background: var(--first-block-clr);
+}
+
+.loading-spinner::after {
+    background: var(--second-block-clr);
+    top: 0;
+    left: 0;
+    transform: none; 
+    animation: down 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
+}
+
+@keyframes down {
+    0%, 100% { transform: none; }
+    25% { transform: translateX(100%); }
+    50% { transform: translateX(100%) translateY(100%); }
+    75% { transform: translateY(100%); }
+}
+
+@keyframes up {
+    0%, 100% { transform: none; }
+    25% { transform: translateX(-100%); }
+    50% { transform: translateX(-100%) translateY(-100%); }
+    75% { transform: translateY(-100%); }
 }
 
 @media (max-width: 600px) {
-  .dia-btn {
-    font-size: 0.9rem;
-    padding: 0.3rem 0.6rem;
-    min-width: 36px;
-  }
+    .dia-btn {
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+    .dias-da-semana,
+    .dias-botoes {
+        gap: 6px;
+        grid-template-columns: repeat(7, minmax(32px, 1fr));
+    }
 }
 
 @media (max-width: 480px) {
@@ -324,18 +407,5 @@
     .fechar-calendario-btn {
         font-size: 0.9rem;
         margin-bottom: 0.2rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .dia-btn {
-        min-width: 32px;
-        height: 32px;
-        font-size: 0.85rem;
-    }
-    .dias-da-semana,
-    .dias-botoes {
-        gap: 6px;
-        grid-template-columns: repeat(7, minmax(32px, 1fr));
     }
 }
