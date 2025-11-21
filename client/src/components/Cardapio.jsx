@@ -119,13 +119,11 @@ const Cardapio = () => {
                     setSelectedDay(diasOrdenados[0]); 
                 }
                 
-                // 🛑 Define isLoading como FALSE imediatamente
                 setIsLoading(false);
             })
             .catch((err) => {
                 console.error('Erro ao carregar cardápio:', err);
                 
-                // 🛑 Define isLoading como FALSE imediatamente mesmo no erro
                 setIsLoading(false);
             });
     }, []);
@@ -159,14 +157,12 @@ const Cardapio = () => {
     return (
         <div className="cardapio-container">
             {isLoading ? (
-                // Conteúdo de Carregamento com a frase personalizada
                 <div className="loading-message-container">
                     <h1>Carregando Cardápio...</h1>
                     <div className="loading-spinner"></div>
-                    <p>Buscando cardápio... (Meu domínio é gratuito, a internet é lenta por aqui 😉)</p> 
+                    <p>Meu domínio é gratuito, então talvez demore um pouquinho</p>
                 </div>
             ) : (
-                // Conteúdo Principal do Cardápio
                 <>
                     <div className='cardapio-botoes'>
                         <div className='voltar-btn' onClick={paginaInicial}>
