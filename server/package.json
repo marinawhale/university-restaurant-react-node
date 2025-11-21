@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js" 
+    "start": "node src/server.js"
   },
   "dependencies": {
+    "compression": "^1.8.1",
     "cors": "^2.8.5",
-    "express": "^4.19.2", 
+    "express": "^4.19.2",
     "xlsx": "^0.18.5"
   },
   "engines": {
