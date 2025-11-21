@@ -12,6 +12,10 @@ app.use(compression({
   threashold: 0
 }))
 
+app.get('/ping', (req, res) => {
+  res.status(200).send('Server is awake and healthy.');
+});
+
 const allowedOrigins = [
     'https://restaurante-cap-frontend.onrender.com',
     'http://localhost:5173'
