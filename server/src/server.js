@@ -1,10 +1,16 @@
 const express = require('express')
+const compression = require('compression')
 const fs = require('fs')
 const path = require('path')
 const cors = require('cors')
 
 const app = express()
 const PORT = process.env.PORT || 3000;
+
+app.use(compression({
+  level: 6,
+  threashold: 0
+}))
 
 const allowedOrigins = [
     'https://restaurante-cap-frontend.onrender.com',
@@ -25,6 +31,8 @@ const corsOptions = {
 app.use(cors({ corsOptions }))
 
 app.get('/api/cardapio', (req, res) => {
+  res.set('Cache-Control', 'public, max-age=300, must-revalidate');
+
     const filePath = path.join(__dirname, 'cardapio', 'cardapio.json');
     const data = fs.readFileSync(filePath, 'utf8');
     res.json(JSON.parse(data));

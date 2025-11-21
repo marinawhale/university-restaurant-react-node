@@ -7,7 +7,6 @@ const API_BASE = import.meta.env.VITE_API_URL;
 
 const MES_BASE = 10;
 const ANO_BASE = 2025;
-// 🛑 TEMPO_PAUSA removida
 
 const diasDaSemana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
