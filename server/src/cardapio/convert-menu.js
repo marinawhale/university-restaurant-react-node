@@ -1,7 +1,11 @@
 const XLSX = require('xlsx');
 const fs = require('fs');
+const path = require('path')
 
-const workbook = XLSX.readFile('src/cardapio/CAP NOVEMBRO 2025.xlsx');
+const XLSX_FILE_PATH = path.join(__dirname, 'CAP NOVEMBRO 2025.xlsx'); 
+const FRONTEND_PUBLIC_PATH = path.join(__dirname, '../../../client/public', 'cardapio.json'); 
+
+const workbook = XLSX.readFile(XLSX_FILE_PATH)
 
 const sheetName = workbook.SheetNames[0];
 const sheet = workbook.Sheets[sheetName];
@@ -17,10 +21,11 @@ function normalizeKey(str) {
     .replace(/ç/g, 'c')
     .replace(/\s+/g, '_');
 }
+
 const headers = Object.values(data[0]).map(normalizeKey);
 
-const cardapio = data.slice(1).map(row =>
-  { const values = Object.values(row);
+const cardapio = data.slice(1).map(row => {
+    const values = Object.values(row);
     const obj = {};
     headers.forEach((key, i) => {
       obj[key] = values[i];
@@ -28,6 +33,6 @@ const cardapio = data.slice(1).map(row =>
     return obj;
   });
     
-fs.writeFileSync('cardapio.json', JSON.stringify(cardapio, null, 2));
+fs.writeFileSync(FRONTEND_PUBLIC_PATH, JSON.stringify(cardapio, null, 2));
 
-console.log('Cardápio convertido para JSON com chaves normalizadas!');
+console.log('Cardápio convertido para JSON');

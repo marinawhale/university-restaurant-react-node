@@ -3,7 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Cardapio.css';
 
-const API_BASE = import.meta.env.VITE_API_URL;
+const CARDAPIO_PATH = '/cardapio.json';
 
 const MES_BASE = 10;
 const ANO_BASE = 2025;
@@ -108,7 +108,7 @@ const Cardapio = () => {
     }, []);
 
     useEffect(() => {
-        fetch(`${API_BASE}/api/cardapio`)
+        fetch(CARDAPIO_PATH)
             .then((res) => res.json())
             .then((data) => {
                 const diasAgrupados = agruparPorDia(data);
@@ -170,7 +170,7 @@ const Cardapio = () => {
                         </div>
                         
                         <div className='voltar-btn' onClick={toggleCalendar}>
-                            {showCalendar ? 'FECHAR CALENDÁRIO' : 'ABRIR CALENDÁRIO'}
+                            <p>ABRIR CALENDÁRIO</p>
                         </div>
                     </div>
 
