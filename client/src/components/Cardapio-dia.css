@@ -1,5 +1,5 @@
 .cardapio-dia {
-    margin: 0 auto;
+    margin: 20px auto;
     max-width: 1500px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     border-radius: 8px;
@@ -66,7 +66,6 @@
 
 @media (max-width: 768px) {
     .cardapio-dia {
-        width: 95%;
         margin: 20px auto 15px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
@@ -85,5 +84,11 @@
     .cardapio-dia h2:hover {
         transform: none;
         cursor: default;
+    }
+}
+
+@media (max-width: 480px) {
+    .cardapio-dia {
+        width: 95%;
     }
 }

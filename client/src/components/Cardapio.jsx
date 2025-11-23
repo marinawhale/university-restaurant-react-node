@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { CalendarDays, Search } from 'lucide-react';
+import Doggo from '../assets/doggo.png'
 import './Cardapio.css';
 
 const CARDAPIO_PATH = '/cardapio.json';
@@ -55,12 +57,21 @@ const isEmendaDeFeriado = (diaAtual, cardapio) => {
     return false;
 };
 
+const normalizeText = (text) => {
+    return String(text)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+};
+
 const Cardapio = () => {
     const diaRefs = useRef({});
     const [cardapio, setCardapio] = useState({});
     const [showButton, setShowButton] = useState(false);
     const [selectedDay, setSelectedDay] = useState(null);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(true); 
     const diasBotoesRef = useRef(null);
 
@@ -69,6 +80,10 @@ const Cardapio = () => {
         let ultimoDiaValido = null;
 
         data.forEach((item) => {
+            if (item.data.toUpperCase().startsWith('OBSERVAÇÕES')) {
+                 return;
+            }
+            
             let dia = null;
             const match = item.data.match(/^(\d{2})/);
 
@@ -98,6 +113,25 @@ const Cardapio = () => {
         return dias;
     };
 
+    const abrirCalendario = () => {
+        setShowCalendar(true);
+        setShowSearch(false);
+    };
+
+    const fecharCalendario = () => {
+        setShowCalendar(false);
+    };
+    
+    const abrirPesquisa = () => {
+        setShowSearch(true);
+        setShowCalendar(false);
+    };
+
+    const fecharPesquisa = () => {
+        setShowSearch(false);
+        setSearchTerm('');
+    };
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 200) setShowButton(true);
@@ -106,6 +140,21 @@ const Cardapio = () => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    useEffect(() => {
+        const handleEsc = (event) => {
+            if (showCalendar && event.key === 'Escape') {
+                fecharCalendario();
+            }
+            if (showSearch && event.key === 'Escape') {
+                fecharPesquisa();
+            }
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => {
+            window.removeEventListener('keydown', handleEsc);
+        };
+    }, [showCalendar, showSearch]);
 
     useEffect(() => {
         fetch(CARDAPIO_PATH)
@@ -150,33 +199,107 @@ const Cardapio = () => {
         });
     };
     
-    const toggleCalendar = () => {
-        setShowCalendar(prev => !prev);
+    const filterCardapio = (term) => {
+        const normalizedTerm = normalizeText(term);
+        
+        if (!normalizedTerm) {
+            return {};
+        }
+
+        const filtered = {};
+
+        Object.entries(cardapio).forEach(([dia, diaData]) => {
+            const matches = {};
+            
+            Object.entries(diaData).forEach(([tipo, item]) => {
+                const itemMatches = Object.values(item).some(value => {
+                    const normalizedValue = normalizeText(value);
+                    return normalizedValue.includes(normalizedTerm);
+                });
+
+                if (itemMatches) {
+                    matches[tipo] = item;
+                }
+            });
+
+            if (Object.keys(matches).length > 0) {
+                filtered[dia] = matches;
+            }
+        });
+
+        return filtered;
     };
+
+    const searchResults = filterCardapio(searchTerm);
+    const displayCardapio = showSearch && searchTerm.length > 0 ? searchResults : cardapio;
 
     return (
         <div className="cardapio-container">
+            <div className='cardapio-botoes'>
+                <div className='cardapio-btn' onClick={paginaInicial}>
+                    <p>VOLTAR</p>
+                </div>
+                <div className='cardapio-btn' onClick={abrirPesquisa}>
+                    <p>PESQUISAR</p>
+                </div>
+                <div className='cardapio-btn' onClick={abrirCalendario}>
+                    <p>ABRIR CALENDÁRIO</p>
+                </div>
+            </div>
+
             {isLoading ? (
                 <div className="loading-message-container">
                     <h1>Carregando Cardápio...</h1>
                     <div className="loading-spinner"></div>
-                    <p>Meu domínio é gratuito, então talvez demore um pouquinho</p>
                 </div>
             ) : (
                 <>
-                    <div className='cardapio-botoes'>
-                        <div className='voltar-btn' onClick={paginaInicial}>
-                            <p >VOLTAR</p>
+                    {showSearch && (
+                        <div>
+                            <div className="calendario-overlay" onClick={fecharPesquisa}></div>
+                            <div className='calendario-flutuante search-flutuante'>
+                                <h3>Buscar no Cardápio</h3>
+                                <input
+                                    type="text"
+                                    placeholder="Ex: maçã, feijoada, strogonoff..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    autoFocus
+                                />
+                                
+                                {searchTerm.length > 0 && (
+                                    <div className="search-results-summary">
+                                        Encontrados {Object.keys(searchResults).length} dias que correspondem a "{searchTerm}".
+                                    </div>
+                                )}
+                                
+                                <div className="dias-botoes search-days" ref={diasBotoesRef}>
+                                    {Object.keys(searchResults).length > 0 ? (
+                                        Object.keys(searchResults).sort((a, b) => parseInt(a) - parseInt(b)).map((dia) => (
+                                            <button
+                                                key={dia}
+                                                className={`dia-btn ${selectedDay === dia ? 'active' : ''}`}
+                                                onClick={() => { irParaDia(dia); fecharPesquisa(); }}
+                                            >
+                                                {dia}
+                                            </button>
+                                        ))
+                                    ) : searchTerm.length > 0 ? (
+                                        <p className="no-results">Nenhum resultado encontrado.</p>
+                                    ) : (
+                                        <p className="no-results">Digite algo para começar a pesquisar.</p>
+                                    )}
+                                </div>
+                                
+                                <div className="fechar-calendario-btn">
+                                    <p onClick={fecharPesquisa}>FECHAR</p>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div className='voltar-btn' onClick={toggleCalendar}>
-                            <p>ABRIR CALENDÁRIO</p>
-                        </div>
-                    </div>
-
+                    )}
                     {showCalendar && (
                         <div>
-                            <div className="calendario-overlay" onClick={toggleCalendar}></div>
+                            <div className="calendario-overlay" onClick={fecharCalendario}></div>
                             <div className='calendario-flutuante'>
                                 <div className="dias-da-semana">
                                     {diasDaSemana.map((label, index) => (
@@ -219,7 +342,7 @@ const Cardapio = () => {
                                             <button
                                                 key={dia}
                                                 className={classeBotao}
-                                                onClick={() => {isClicavel && irParaDia(dia); toggleCalendar()}}
+                                                onClick={() => {isClicavel && irParaDia(dia); fecharCalendario()}}
                                                 title={tooltip}
                                                 disabled={!isClicavel}
                                             >
@@ -230,13 +353,13 @@ const Cardapio = () => {
                                 </div>
 
                                 <div className="fechar-calendario-btn">
-                                    <p onClick={toggleCalendar}>FECHAR</p>
+                                    <p onClick={fecharCalendario}>FECHAR</p>
                                 </div>
                             </div>
                         </div>
                     )}
-
-                    {Object.entries(cardapio)
+                    
+                    {Object.entries(displayCardapio)
                         .sort(([diaA], [diaB]) => parseInt(diaA) - parseInt(diaB))
                         .map(([dia, diaData]) => {
                             
@@ -276,12 +399,31 @@ const Cardapio = () => {
                                 </div>
                             );
                         })}
+                        
+                    {showSearch && searchTerm.length > 0 && Object.keys(searchResults).length === 0 && (
+                        <div className="no-results-message">
+                            Nenhum prato ou ingrediente encontrado para **"{searchTerm}"** neste mês.
+                        </div>
+                    )}
+
 
                     {showButton && (
-                        <button className="scroll-top-button" onClick={scrollToTop}>
+                        <div>
+                            <button className="scroll-top-btn" onClick={scrollToTop}>
                             ↑
-                        </button>
+                            </button>
+                            <button className="calendar-btn" onClick={abrirCalendario}>
+                                <CalendarDays />
+                            </button>
+                            <button className="search-flutuante-btn" onClick={abrirPesquisa}>
+                                <Search />
+                            </button>
+                        </div>
                     )}
+                    <div className='tchau'>
+                        <img src={Doggo} alt="" />
+                        <p>Obrigada por ver até aqui</p>
+                    </div>
                 </>
             )}
         </div>

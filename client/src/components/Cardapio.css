@@ -6,29 +6,23 @@
     display: flex;
     flex-direction: column;
     max-width: 1500px;
-    margin: 30px auto 20px;
+    margin: 20px auto 20px;
     width: 70%;
-}
-
-.refeicao {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-
-    margin: 20px 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .cardapio-botoes {
     display: flex;
-    gap: 2rem;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
-.voltar-btn {
+.cardapio-botoes .voltar-btn p {
+    padding: 10px 15px;
+    text-align: center;
+}
+
+.cardapio-btn {
     text-align: center;
     display: flex;
     justify-content: center;
@@ -43,20 +37,16 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     border: solid #961e1e 2px;
     width: 30%;
-    margin-bottom: 1rem;
+    margin-bottom: 0.3rem;
 }
 
-.voltar-btn:hover {
+.cardapio-btn:hover {
     color: #961e1e;
     background-color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.5);
-}
-
-.refeicao h3 {
-    color: #961e1e;
 }
 
 .dia {
@@ -77,140 +67,21 @@
     color: white;
 }
 
-.scroll-top-button {
+.refeicao {
     display: flex;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    padding: 0.5rem;
-    position: fixed;
-    bottom: 20px;
-    right: 30px;
-    color: #f9f9f9;
-    background-color: #961e1e;
-    border: none;
-    border-radius: 10px;
-    font-size: 24px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-    z-index: 1000;
-}
-
-.scroll-top-button:hover {
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
-@media (min-width: 900px) {
-    .dia-div {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .refeicao {
-        flex: 1 1 45%;
-        margin: 0.5rem;
-    }
-}
-
-
-@media (min-width: 768px) {
-    .scroll-top-button {
-        right: 6vw;
-    }
-}
-
-@media (min-width: 1200px) {
-    .scroll-top-button {
-        right: 8vw;
-    }
-}
-
-.dias-container {
-    margin-bottom: 1rem;
-}
-
-.dias-botoes {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(40px, 1fr)); 
-    
-    gap: 8px; 
-    max-width: 450px;
-    margin: 0 auto 30px auto;
-    padding: 10px;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
     border: 1px solid #ccc;
-    border-radius: 8px;
     background-color: #f9f9f9;
+    border-radius: 10px;
+
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.dia-btn {
-    padding: 8px 0;
-    aspect-ratio: 1 / 1;
-    font-size: 1em;
-    font-weight: bold;
-    border: 2px solid #a00;
-    border-radius: 6px;
-    background-color: white;
-    color: #a00;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.dia-btn:hover {
-    background-color: #961e1e;
-    color: #fff;
-    transform: scale(1.05);
-}
-
-.feriado-msg {
-    color: white;
-    font-weight: 600;
-}
-
-.dias-botoes .disabled-btn {
-    background-color: #e7e7e7;
-    color: #2d2d2d;
-    border-color: #666666;
-    cursor: not-allowed;
-    opacity: 0.6;
-    box-shadow: none;
-}
-
-.dias-botoes .disabled-btn.active {
-    background-color: #aaaaaa; 
-    color: #ffffff;
-}
-
-.dia-placeholder {
-    aspect-ratio: 1 / 1;
-    visibility: hidden; 
-}
-
-.dias-da-semana {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(40px, 1fr)); 
-    gap: 8px;
-    
-    max-width: 450px; 
-    margin: 0 auto 5px auto;
-    padding: 0 10px;
-}
-
-.dia-label {
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.85em;
-    color: #666;
-    padding: 5px 0;
-}
-
-.dias-botoes {
-    margin-top: 0;
+.refeicao h3 {
+    color: #961e1e;
 }
 
 .calendario-overlay {
@@ -254,6 +125,248 @@
     cursor: pointer;
     text-decoration: none;
 }
+
+.dias-container {
+    margin-bottom: 1rem;
+}
+
+.dias-da-semana {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(40px, 1fr)); 
+    gap: 8px;
+    
+    max-width: 450px; 
+    margin: 0 auto 5px auto;
+    padding: 0 10px;
+}
+
+.dia-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.85em;
+    color: #666;
+    padding: 5px 0;
+}
+
+.dias-botoes {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(40px, 1fr)); 
+    
+    gap: 8px; 
+    max-width: 450px;
+    margin: 0 auto 30px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.dia-btn {
+    padding: 8px 8px;
+    aspect-ratio: 1 / 1;
+    font-size: 1em;
+    font-weight: bold;
+    border: 2px solid #a00;
+    border-radius: 6px;
+    background-color: white;
+    color: #a00;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dia-btn:hover {
+    background-color: #961e1e;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.dias-botoes .disabled-btn {
+    background-color: #e7e7e7;
+    color: #2d2d2d;
+    border-color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+.dias-botoes .disabled-btn.active {
+    background-color: #aaaaaa; 
+    color: #ffffff;
+}
+
+.feriado-msg {
+    color: white;
+    font-weight: 600;
+}
+
+.dia-placeholder {
+    aspect-ratio: 1 / 1;
+    visibility: hidden; 
+}
+
+.search-flutuante {
+    width: 90%; 
+    max-width: 500px;
+    height: auto;
+    max-height: 80vh; 
+    padding: 20px;
+    
+    display: flex; 
+    flex-direction: column;
+}
+
+.search-flutuante h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.search-flutuante input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-flutuante input[type="text"]:focus {
+    border-color: #961e1e;
+    box-shadow: 0 0 0 1px #2d2d2d;
+}
+
+.search-results-summary {
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #555;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-days {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+}
+
+.search-day-btn {
+    flex-basis: calc(20% - 8px); 
+    padding: 12px 0;
+    aspect-ratio: 1 / 1;
+    font-size: 1em;
+    font-weight: bold;
+    border: 2px solid #961e1e;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    color: #961e1e;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-day-btn:hover {
+    background-color: #961e1e;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.no-results {
+    color: #888;
+    text-align: center;
+    width: 100%;
+    font-style: italic;
+}
+
+.no-results-message {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    color: #888;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-size: 1.1em;
+}
+
+.scroll-top-btn,
+.calendar-btn,
+.search-flutuante-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    padding: 0.5rem;
+    position: fixed;
+    
+    color: #f9f9f9;
+    background-color: #961e1e;
+    border: none;
+    border-radius: 10px;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    z-index: 900;
+    right: 30px;
+}
+
+.scroll-top-btn {
+    bottom: 20px;
+}
+
+.calendar-btn {
+    bottom: 95px;
+}
+
+.search-flutuante-btn {
+    bottom: 170px;
+}
+
+.scroll-top-btn:hover,
+.calendar-btn:hover,
+.search-flutuante-btn:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.tchau {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.tchau img {
+    border-radius: 8px;
+}
+
+.tchau p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: .5rem;
+}
+
 .loading-message-container {
     top: 0;
     left: 0;
@@ -333,6 +446,43 @@
     75% { transform: translateY(-100%); }
 }
 
+@media (min-width: 900px) {
+    .dia-div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .refeicao {
+        flex: 1 1 45%;
+        margin: 0.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .scroll-top-btn {
+        right: 6vw;
+    }
+    .calendar-btn {
+        right: 6vw;
+    }
+    .search-flutuante-btn {
+        right: 6vw;
+    }
+}
+
+@media (min-width: 1200px) {
+    .scroll-top-btn {
+        right: 8vw;
+    }
+    .calendar-btn {
+        right: 8vw;
+    }
+    .search-flutuante-btn {
+        right: 8vw;
+    }
+}
+
 @media (max-width: 600px) {
     .dia-btn {
         min-width: 32px;
@@ -343,6 +493,25 @@
     .dias-botoes {
         gap: 6px;
         grid-template-columns: repeat(7, minmax(32px, 1fr));
+    }
+}
+
+@media (max-width: 490px) {
+    .scroll-top-btn {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .calendar-btn {
+        width: 3rem;
+        height: 3rem;
+        bottom: 75px
+    }
+
+    .search-flutuante-btn {
+        width: 3rem;
+        height: 3rem;
+        bottom: 130px
     }
 }
 
@@ -357,7 +526,7 @@
         gap: 0.5rem;
     }
 
-    .voltar-btn {
+    .cardapio-btn {
         width: 100%;
         font-size: 0.9rem;
     }

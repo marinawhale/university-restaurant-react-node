@@ -6,7 +6,11 @@ import { ShoppingCart, UserCircle, Home } from 'lucide-react'
 const Header = () => {
 
   const irParaUFSJ = () => {
-    window.location.href = 'https://www.ufsj.edu.br'
+    window.open('https://www.ufsj.edu.br', '_blank')
+  }
+
+  const irParaCAP = () => {
+    window.open('https://www.ufsj.edu.br/cap', '_blank')
   }
 
     return (
@@ -20,7 +24,10 @@ const Header = () => {
           </p>
         </div>
         <div className='header-cap'>
-          <p><b>CAP</b> - Campus Alto Paraopeba</p>
+          <div
+          className="logo-cap"
+          onClick={irParaCAP}
+          ><b>CAP</b> - Campus Alto Paraopeba</div>
         </div>
 
         {/*<nav className="header-options">
