@@ -66,6 +66,7 @@ const normalizeText = (text) => {
 
 const Cardapio = () => {
     const diaRefs = useRef({});
+    const isInitialLoad = useRef(true); 
     const [cardapio, setCardapio] = useState({});
     const [showButton, setShowButton] = useState(false);
     const [selectedDay, setSelectedDay] = useState(null);
@@ -145,19 +146,7 @@ const Cardapio = () => {
         scrollToTop(); 
     }
 
-    // ⭐ CORREÇÃO DO SCROLL INICIAL ⭐
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            // 1. Rola para o topo (o comando essencial)
-            window.scrollTo(0, 0);
-
-            // 2. Força o foco no body para anular o foco automático em outros elementos
-            document.body.focus();
-        }, 200); // Tempo aumentado para garantir a renderização completa
-        
-        return () => clearTimeout(timer);
-    }, []);
-    // ⭐ FIM DA CORREÇÃO ⭐
+    
 
     useEffect(() => {
         const handleScroll = () => {
@@ -225,9 +214,16 @@ const Cardapio = () => {
         if (showCalendar) fecharCalendario();
     };
     
-    // useEffect para tratar o scroll APÓS a re-renderização (mantido)
     useEffect(() => {
-        if (selectedDay && !showCalendar && !showSearch) {
+        if (isLoading || showCalendar || showSearch) {
+            return;
+        }
+        if (isInitialLoad.current && selectedDay) {
+            isInitialLoad.current = false;
+            return;
+        }
+
+        if (selectedDay) {
             const targetElement = diaRefs.current[selectedDay];
             if (targetElement) {
                 setTimeout(() => {
@@ -235,7 +231,7 @@ const Cardapio = () => {
                 }, 100); 
             }
         }
-    }, [selectedDay, showCalendar, showSearch]);
+    }, [selectedDay, showCalendar, showSearch, isLoading]);
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -386,7 +382,7 @@ const Cardapio = () => {
                                         const isClicavel = temCardapio && !isFDS && !isFeriadoProprio && !isEmenda;
 
                                         const classeBotao = `dia-btn ${selectedDay === dia ? 'active' : ''} ${!isClicavel ? 'disabled-btn' : ''}`;
-                                            
+                                        
                                         let tooltip = '';
                                         if (isFeriadoProprio) {
                                             tooltip = 'FERIADO';
