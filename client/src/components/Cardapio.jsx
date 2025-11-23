@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { CalendarDays, Search } from 'lucide-react';
+import { CalendarDays, Search, X } from 'lucide-react'; 
 import Doggo from '../assets/doggo.png'
 import './Cardapio.css';
 
@@ -71,7 +71,10 @@ const Cardapio = () => {
     const [selectedDay, setSelectedDay] = useState(null);
     const [showCalendar, setShowCalendar] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
+    
+    const [searchInput, setSearchInput] = useState(''); 
+    const [activeSearchTerm, setActiveSearchTerm] = useState(''); 
+    
     const [isLoading, setIsLoading] = useState(true); 
     const diasBotoesRef = useRef(null);
 
@@ -81,7 +84,7 @@ const Cardapio = () => {
 
         data.forEach((item) => {
             if (item.data.toUpperCase().startsWith('OBSERVAÇÕES')) {
-                 return;
+                return;
             }
             
             let dia = null;
@@ -116,6 +119,9 @@ const Cardapio = () => {
     const abrirCalendario = () => {
         setShowCalendar(true);
         setShowSearch(false);
+        if (activeSearchTerm) {
+            setActiveSearchTerm('');
+        }
     };
 
     const fecharCalendario = () => {
@@ -125,12 +131,33 @@ const Cardapio = () => {
     const abrirPesquisa = () => {
         setShowSearch(true);
         setShowCalendar(false);
+        setSearchInput(activeSearchTerm);
     };
-
+    
     const fecharPesquisa = () => {
         setShowSearch(false);
-        setSearchTerm('');
+        setSearchInput(''); 
     };
+    
+    const limparBuscaAtiva = () => {
+        setActiveSearchTerm('');
+        setSearchInput('');
+        scrollToTop(); 
+    }
+
+    // ⭐ CORREÇÃO DO SCROLL INICIAL ⭐
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            // 1. Rola para o topo (o comando essencial)
+            window.scrollTo(0, 0);
+
+            // 2. Força o foco no body para anular o foco automático em outros elementos
+            document.body.focus();
+        }, 200); // Tempo aumentado para garantir a renderização completa
+        
+        return () => clearTimeout(timer);
+    }, []);
+    // ⭐ FIM DA CORREÇÃO ⭐
 
     useEffect(() => {
         const handleScroll = () => {
@@ -180,17 +207,35 @@ const Cardapio = () => {
     const navigate = useNavigate();
     const paginaInicial = () => navigate('/');
     
+    const aplicarFiltroEIrParaDia = (dia) => {
+        setSelectedDay(dia);
+        
+        if (searchInput.length > 0) {
+            setActiveSearchTerm(searchInput);
+        } else {
+            setActiveSearchTerm(''); 
+        }
+        
+        fecharPesquisa(); 
+    };
+
     const irParaDia = (dia) => {
         setSelectedDay(dia);
         
-        if (diasBotoesRef.current) {
-             diasBotoesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        if (diaRefs.current[dia]) {
-            diaRefs.current[dia].scrollIntoView({ behavior: 'smooth' });
-        }
+        if (showCalendar) fecharCalendario();
     };
+    
+    // useEffect para tratar o scroll APÓS a re-renderização (mantido)
+    useEffect(() => {
+        if (selectedDay && !showCalendar && !showSearch) {
+            const targetElement = diaRefs.current[selectedDay];
+            if (targetElement) {
+                setTimeout(() => {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100); 
+            }
+        }
+    }, [selectedDay, showCalendar, showSearch]);
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -230,8 +275,12 @@ const Cardapio = () => {
         return filtered;
     };
 
-    const searchResults = filterCardapio(searchTerm);
-    const displayCardapio = showSearch && searchTerm.length > 0 ? searchResults : cardapio;
+    const resultsForDisplay = filterCardapio(activeSearchTerm);
+    const displayCardapio = activeSearchTerm.length > 0 ? resultsForDisplay : cardapio;
+    
+    const modalResults = filterCardapio(searchInput);
+    const currentModalResults = searchInput.length > 0 ? modalResults : {};
+
 
     return (
         <div className="cardapio-container">
@@ -246,6 +295,15 @@ const Cardapio = () => {
                     <p>ABRIR CALENDÁRIO</p>
                 </div>
             </div>
+
+            {activeSearchTerm.length > 0 && (
+                <div className="active-filter-bar">
+                    <p>Mostrando resultados para: "{activeSearchTerm}"</p>
+                    <button className="clear-filter-btn" onClick={limparBuscaAtiva}>
+                        <X size={16} /> Limpar Busca
+                    </button>
+                </div>
+            )}
 
             {isLoading ? (
                 <div className="loading-message-container">
@@ -262,29 +320,29 @@ const Cardapio = () => {
                                 <input
                                     type="text"
                                     placeholder="Ex: maçã, feijoada, strogonoff..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
                                     autoFocus
                                 />
                                 
-                                {searchTerm.length > 0 && (
+                                {searchInput.length > 0 && (
                                     <div className="search-results-summary">
-                                        Encontrados {Object.keys(searchResults).length} dias que correspondem a "{searchTerm}".
+                                        Encontrados {Object.keys(currentModalResults).length} dias que correspondem a "{searchInput}".
                                     </div>
                                 )}
                                 
                                 <div className="dias-botoes search-days" ref={diasBotoesRef}>
-                                    {Object.keys(searchResults).length > 0 ? (
-                                        Object.keys(searchResults).sort((a, b) => parseInt(a) - parseInt(b)).map((dia) => (
+                                    {Object.keys(currentModalResults).length > 0 ? (
+                                        Object.keys(currentModalResults).sort((a, b) => parseInt(a) - parseInt(b)).map((dia) => (
                                             <button
                                                 key={dia}
                                                 className={`dia-btn ${selectedDay === dia ? 'active' : ''}`}
-                                                onClick={() => { irParaDia(dia); fecharPesquisa(); }}
+                                                onClick={() => { aplicarFiltroEIrParaDia(dia); }} 
                                             >
                                                 {dia}
                                             </button>
                                         ))
-                                    ) : searchTerm.length > 0 ? (
+                                    ) : searchInput.length > 0 ? (
                                         <p className="no-results">Nenhum resultado encontrado.</p>
                                     ) : (
                                         <p className="no-results">Digite algo para começar a pesquisar.</p>
@@ -342,7 +400,7 @@ const Cardapio = () => {
                                             <button
                                                 key={dia}
                                                 className={classeBotao}
-                                                onClick={() => {isClicavel && irParaDia(dia); fecharCalendario()}}
+                                                onClick={() => {isClicavel && irParaDia(dia);}}
                                                 title={tooltip}
                                                 disabled={!isClicavel}
                                             >
@@ -400,9 +458,9 @@ const Cardapio = () => {
                             );
                         })}
                         
-                    {showSearch && searchTerm.length > 0 && Object.keys(searchResults).length === 0 && (
+                    {activeSearchTerm.length > 0 && Object.keys(resultsForDisplay).length === 0 && (
                         <div className="no-results-message">
-                            Nenhum prato ou ingrediente encontrado para **"{searchTerm}"** neste mês.
+                            Nenhum prato ou ingrediente encontrado para **"{activeSearchTerm}"** neste mês.
                         </div>
                     )}
 

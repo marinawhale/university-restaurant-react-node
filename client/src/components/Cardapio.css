@@ -302,6 +302,28 @@
     font-size: 1.1em;
 }
 
+.active-filter-bar {
+    margin-top: .7rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.clear-filter-btn {
+    margin-top: .7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    
+    color: #f9f9f9;
+    background-color: #333;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
 .scroll-top-btn,
 .calendar-btn,
 .search-flutuante-btn {
@@ -339,6 +361,11 @@
 .scroll-top-btn:hover,
 .calendar-btn:hover,
 .search-flutuante-btn:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.clear-filter-btn:hover {
     transform: scale(1.05);
     cursor: pointer;
 }
