@@ -2,7 +2,7 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path')
 
-const XLSX_FILE_PATH = path.join(__dirname, 'CAP NOVEMBRO 2025.xlsx'); 
+const XLSX_FILE_PATH = path.join(__dirname, 'CARDAPIO CAP DEZEMBRO  2025.xlsx'); 
 const FRONTEND_PUBLIC_PATH = path.join(__dirname, '../../../client/public', 'cardapio.json'); 
 
 const workbook = XLSX.readFile(XLSX_FILE_PATH)

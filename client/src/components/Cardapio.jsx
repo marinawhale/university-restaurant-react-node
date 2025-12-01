@@ -7,7 +7,7 @@ import './Cardapio.css';
 
 const CARDAPIO_PATH = '/cardapio.json';
 
-const MES_BASE = 10;
+const MES_BASE = 11;
 const ANO_BASE = 2025;
 
 const diasDaSemana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
@@ -68,7 +68,6 @@ const Cardapio = () => {
     const diaRefs = useRef({});
     const isInitialLoad = useRef(true); 
     
-    // NOVO ESTADO: Controla se o scroll deve ser disparado após a seleção de um dia
     const [shouldScroll, setShouldScroll] = useState(false); 
     
     const [cardapio, setCardapio] = useState({});
@@ -176,7 +175,6 @@ const Cardapio = () => {
         };
     }, [showCalendar, showSearch]);
 
-    // Efeito para buscar os dados e definir o dia inicial
     useEffect(() => {
         fetch(CARDAPIO_PATH)
             .then((res) => res.json())
@@ -203,7 +201,7 @@ const Cardapio = () => {
     
     const aplicarFiltroEIrParaDia = (dia) => {
         setSelectedDay(dia);
-        setShouldScroll(true); // ATIVA O SCROLL NA PRÓXIMA RENDERIZAÇÃO
+        setShouldScroll(true);
         
         if (searchInput.length > 0) {
             setActiveSearchTerm(searchInput);
@@ -216,25 +214,20 @@ const Cardapio = () => {
 
     const irParaDia = (dia) => {
         setSelectedDay(dia);
-        setShouldScroll(true); // ATIVA O SCROLL NA PRÓXIMA RENDERIZAÇÃO
+        setShouldScroll(true);
         
         if (showCalendar) fecharCalendario();
     };
     
-    // useEffect FINAL e CORRIGIDO para tratar o scroll
     useEffect(() => {
-        // BLOQUEIO GERAL: Se estiver carregando ou a flag não foi ativada, sai.
         if (isLoading || !shouldScroll) {
             return;
         }
         
-        // BLOQUEIO INICIAL (do problema anterior): Permite que a primeira definição de selectedDay
-        // ocorra sem scroll, e desativa a flag isInitialLoad para sempre.
         if (isInitialLoad.current && selectedDay) {
             isInitialLoad.current = false;
         }
 
-        // EXECUTA O SCROLL
         if (selectedDay) {
             const targetElement = diaRefs.current[selectedDay];
             if (targetElement) {
@@ -244,10 +237,8 @@ const Cardapio = () => {
             }
         }
         
-        // Resetar a flag para que o scroll não ocorra novamente em outras mudanças de estado.
         setShouldScroll(false); 
 
-    // O useEffect agora só reage a selectedDay (que indica o dia) e shouldScroll (que autoriza a ação).
     }, [selectedDay, shouldScroll, isLoading]);
 
     const scrollToTop = () => {
